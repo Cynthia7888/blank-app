@@ -18,7 +18,6 @@ def load_model_1():
 
 # Load the models
 model_1 = load_model_1()
-model_2 = load_model_2()
 
 # Function to perform face detection
 def detect_faces(image):
@@ -48,7 +47,7 @@ def detect_faces(image):
     return image_with_faces, face_regions, len(faces)
 
 # Function to predict face identity using two models
-def predict_face_identity(face_region, model_1, model_2):
+def predict_face_identity(face_region, model_1):
     # Preprocess face_region for the models
     face = cv2.resize(face_region, (128, 128))  # Resize to match model input size
     face = np.expand_dims(face, axis=0)  # Add batch dimension
@@ -56,17 +55,16 @@ def predict_face_identity(face_region, model_1, model_2):
 
     # Get predictions from both models
     pred_1 = np.argmax(model_1.predict(face), axis=1)
-    pred_2 = np.argmax(model_2.predict(face), axis=1)
 
     # Get label from class
     if pred_1[0] == "Class 0":
-        pred_1_label = "Kaung Zaw Hein"
+        pred_1_label = "Khin ThinZar Maung"
     
     if pred_1[0] == "Class 1":
-        predict_1_label = "Khant Nay Linn Tun"
+        predict_1_label = "May Mee Kyaw Toe"
 
     if pred_1[0] == "Class 2":
-        pred_1_label = "Min Thiha Kyaw"
+        pred_1_label = "Yu Yu Naing"
 
 
     return f"Model 1 (VGG_16) predicts: Class {pred_1_label}"
@@ -91,7 +89,7 @@ if option == "Browse Image":
 
         # Predict face identities
         for i, face in enumerate(face_regions):
-            pred_1, pred_2 = predict_face_identity(face, model_1, model_2)
+            pred_1, pred_2 = predict_face_identity(face, model_1)
             st.write(f"Face {i+1}:")
             st.write(pred_1)
             st.write(pred_2)
@@ -117,7 +115,6 @@ elif option == "Capture Image":
 
         # Predict face identities
         for i, face in enumerate(face_regions):
-            pred_1, pred_2 = predict_face_identity(face, model_1, model_2)
+            pred_1= predict_face_identity(face, model_1)
             st.write(f"Face {i+1}:")
             st.write(pred_1)
-            st.write(pred_2)
