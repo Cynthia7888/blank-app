@@ -13,7 +13,7 @@ option = st.radio("Choose an option:", ("Browse Image", "Capture Image"))
 
 # Load pre-trained face recognition models
 def load_model_1():
-    model_path = "Own_Dataset_GoogleNet_16_50.h5"  # Replace with your actual model file name
+    model_path = "Cynthia7888/blank-app/vgg2.h5"  # Replace with your actual model file name
     return tf.keras.models.load_model(model_path)
 
 # Load the models
